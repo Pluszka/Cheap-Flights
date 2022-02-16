@@ -1,6 +1,5 @@
 import os
 import requests
-from pprint import pprint
 
 ENDPOINT = os.environ.get('FLIGHTS_SHEET_API')
 
@@ -10,5 +9,13 @@ header = {
 
 
 class DataManager:
-    #This class is responsible for talking to the Google Sheet.
-    pass
+    def __init__(self):
+        self.prices = {}
+        self.get_prices()
+
+    def get_prices(self):
+        response = requests.get(url=ENDPOINT, headers=header)
+        response.raise_for_status()
+        data = response.json()
+        self.prices = data['prices']
+
