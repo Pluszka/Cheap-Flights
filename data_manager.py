@@ -19,3 +19,11 @@ class DataManager:
         data = response.json()
         self.prices = data['prices']
 
+    def update_IATA(self, country):
+        params_to_update = {
+            'price': {
+                'iataCode': country['iataCode']
+            }
+        }
+        response = requests.put(url=f'{ENDPOINT}/{country["id"]}', json=params_to_update, headers=header)
+        print(response.text)

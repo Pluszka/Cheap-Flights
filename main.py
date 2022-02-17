@@ -8,5 +8,4 @@ print(sheet_data.prices)
 for country in sheet_data.prices:
     if len(country['iataCode']) == 0:
         country['iataCode'] = flight.get_code()
-
-print(sheet_data.prices)
+        sheet_data.update_IATA(country)
