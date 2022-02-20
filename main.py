@@ -1,12 +1,22 @@
 from data_manager import DataManager
 from flight_search import FlightSearch
+from notification_manager import NotificationManager
 
 flight = FlightSearch()
 sheet_data = DataManager()
+notification = NotificationManager()
 
 for country in sheet_data.prices:
     if len(country['iataCode']) == 0:
         country['iataCode'] = flight.get_code(country['city'])
 
 for country in sheet_data.prices:
-    flight.found_flight(country['iataCode'])
+    today_flight = flight.found_flight(country['iataCode'])
+    try:
+        current_price = today_flight.price
+    except AttributeError:
+        pass
+    else:
+        if country['lowestPrice'] > current_price:
+            print('lower')
+            notification.send_alert(today_flight)
