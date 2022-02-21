@@ -1,10 +1,10 @@
 import os
 import requests
 
-ENDPOINT = os.environ.get('FLIGHTS_SHEET_API')
+ENDPOINT = f"{os.environ.get('API_PRICES&USERS')}/prices"
 
 header = {
-    'Authorization': f'Bearer {os.environ.get("TOKEN_FLIGHTS_SHEET")}'
+    'Authorization': f'Bearer {os.environ.get("TOKEN-FC")}'
 }
 
 
