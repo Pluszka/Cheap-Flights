@@ -14,6 +14,7 @@ end_of_searching = dt.date.today() + dt.timedelta(180)
 
 
 class FlightSearch:
+
     def get_code(self, city):
         query = {
             'term': city,
@@ -42,8 +43,19 @@ class FlightSearch:
         try:
             data = response.json()["data"][0]
         except IndexError:
-            print(f'No flights found to {city_code}')
-            return None
+            query["max_stopovers"] = 1
+            response = requests.get(url=f"{ENDPOINT_KIWI}/v2/search", headers=HEADER, params=query)
+            try:
+                data = response.json()["data"][0]
+            except IndexError:
+                return None
+            else:
+                offer = FlightData(data["price"], data["route"][0]["cityFrom"],
+                                   data["route"][0]["flyFrom"], data["route"][0]["cityTo"],
+                                   data["route"][0]["flyTo"], data["route"][0]["local_departure"].split("T")[0],
+                                   data["route"][1]["local_departure"].split("T")[0], 1, data["route"][0]["cityTo"])
+                print(f"{offer.destination}: £{offer.price}")
+                return offer
         offer = FlightData(data["price"], data["route"][0]["cityFrom"],
                 data["route"][0]["flyFrom"], data["route"][0]["cityTo"],
                 data["route"][0]["flyTo"], data["route"][0]["local_departure"].split("T")[0],
