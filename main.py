@@ -24,7 +24,3 @@ for country in sheet_data.prices:
             notification.create_message(today_flight)
             notification.send_alert()
             notification.send_email(emails)
-
-# print('Let\'s sing up to the flight club!')
-# emails.add_user()
-# print('Thanks for register to service')
