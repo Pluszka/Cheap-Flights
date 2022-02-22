@@ -6,6 +6,7 @@ from notification_manager import NotificationManager
 flight = FlightSearch()
 sheet_data = DataManager()
 notification = NotificationManager()
+emails = UserData()
 
 for country in sheet_data.prices:
     if len(country['iataCode']) == 0:
@@ -20,9 +21,10 @@ for country in sheet_data.prices:
     else:
         if country['lowestPrice'] > current_price:
             print('lower')
-            notification.send_alert(today_flight)
+            notification.create_message(today_flight)
+            notification.send_alert()
+            notification.send_email(emails)
 
-# emails = UserData()
 # print('Let\'s sing up to the flight club!')
 # emails.add_user()
 # print('Thanks for register to service')
