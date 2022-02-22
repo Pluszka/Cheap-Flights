@@ -6,7 +6,7 @@ from flight_data import FlightData
 
 ENDPOINT_KIWI = 'https://tequila-api.kiwi.com'
 HEADER = {
-    'apikey': os.environ.get('KIWI_API_KEY')
+    'apikey': os.environ.get('TEQ_API_KEY')
 }
 MY_LOCATION = 'WAW'
 tomorrow = dt.date.today() + dt.timedelta(1)
